@@ -1,18 +1,9 @@
 (function () {
   var config = window.LEP_CONFIG || {};
-  var CONSENT_KEY = "livrosempromo-meta-consent";
 
   var cta = document.getElementById("cta");
   if (cta && config.whatsappUrl) {
     cta.href = config.whatsappUrl;
-  }
-
-  function readConsent() {
-    try {
-      return localStorage.getItem(CONSENT_KEY);
-    } catch (error) {
-      return null;
-    }
   }
 
   function campaignParams() {
@@ -50,13 +41,11 @@
     window.fbq("track", "PageView", campaignParams());
   }
 
-  if (readConsent() === "granted") {
-    loadPixel();
-  }
+  loadPixel();
 
   if (cta) {
     cta.addEventListener("click", function () {
-      if (readConsent() !== "granted" || typeof window.fbq !== "function") return;
+      if (typeof window.fbq !== "function") return;
       var data = campaignParams();
       data.content_name = "Quero receber ofertas";
       window.fbq("trackCustom", "WhatsAppClick", data);
