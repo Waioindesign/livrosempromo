@@ -15,14 +15,6 @@
     }
   }
 
-  function writeConsent(value) {
-    try {
-      localStorage.setItem(CONSENT_KEY, value);
-    } catch (error) {
-      /* private mode */
-    }
-  }
-
   function campaignParams() {
     var params = new URLSearchParams(window.location.search);
     var data = {};
@@ -58,31 +50,8 @@
     window.fbq("track", "PageView", campaignParams());
   }
 
-  var consent = document.getElementById("consent");
-  var stored = readConsent();
-
-  if (stored === "granted") {
+  if (readConsent() === "granted") {
     loadPixel();
-  } else if (stored !== "denied" && consent) {
-    consent.hidden = false;
-  }
-
-  var accept = document.getElementById("consent-accept");
-  var decline = document.getElementById("consent-decline");
-
-  if (accept) {
-    accept.addEventListener("click", function () {
-      writeConsent("granted");
-      if (consent) consent.hidden = true;
-      loadPixel();
-    });
-  }
-
-  if (decline) {
-    decline.addEventListener("click", function () {
-      writeConsent("denied");
-      if (consent) consent.hidden = true;
-    });
   }
 
   if (cta) {
