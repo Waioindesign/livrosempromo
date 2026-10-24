@@ -48,7 +48,7 @@
       if (typeof window.fbq !== "function") return;
       var data = campaignParams();
       data.content_name = "Quero receber ofertas";
-      window.fbq("trackCustom", "WhatsAppClick", data);
+      window.fbq("track", "Lead", data);
     });
   }
 
